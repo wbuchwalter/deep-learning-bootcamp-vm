@@ -8,10 +8,6 @@
     "adminPassword": {
       "value": "Demo12345678"
     },
-    "customData": {
-      // execute install.sh
-      "value": "curl -L -sf https://raw.githubusercontent.com/wbuchwalter/deep-learning-bootcamp-vm/master/install.sh | sudo sh"
-    },
     "dnsLabelPrefix": {
       "value": "GEN-UNIQUE"
     }

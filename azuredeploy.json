@@ -19,13 +19,6 @@
       "metadata": {
         "description": "Password for the Virtual Machine."
       }
-    },
-    "customData": {
-      "type": "string",
-      "defaultValue": "echo customData",
-      "metadata": {
-        "description": "String passed down to the Virtual Machine."
-      }
     }
   },
   "variables": {
@@ -46,7 +39,8 @@
     "storageAccountType": "Standard_LRS",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnet1Ref": "[concat(variables('vnetID'),'/subnets/',variables('subnet1Name'))]",
-    "apiVersion": "2015-06-15"
+    "apiVersion": "2015-06-15",
+    "customData": "curl -L -sf https://raw.githubusercontent.com/wbuchwalter/deep-learning-bootcamp-vm/master/install.sh | sudo sh"
   },
   "resources": [
     {
@@ -134,7 +128,7 @@
           "computerName": "[variables('vmName')]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]",
-          "customData": "[base64(parameters('customData'))]"
+          "customData": "[base64(variables('customData'))]"
         },
         "storageProfile": {
           "imageReference": {

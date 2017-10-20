@@ -116,6 +116,11 @@
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[variables('vmName')]",
       "location": "[resourceGroup().location]",
+      "plan": {
+        "name": "linuxdsvmubuntu",
+        "product": "linux-data-science-vm-ubuntu",
+        "publisher": "microsoft-ads"
+      },
       "dependsOn": [
         "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
         "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"

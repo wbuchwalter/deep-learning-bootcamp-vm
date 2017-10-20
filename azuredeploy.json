@@ -158,31 +158,33 @@
             "storageUri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')), variables('apiVersion')).primaryEndpoints.blob)]"
           }
         }
-      }
-    },
-    {
-      "apiVersion": "2015-06-15",
-      "type": "extensions",
-      "name": "config-app",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
-      ],
-      "tags": {
-        "displayName": "config-app"
       },
-      "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "fileUris": [
-            "[variables('scriptUri')]"
+      "resources": [
+        {
+          "apiVersion": "2016-04-30-preview",
+          "type": "extensions",
+          "name": "config-app",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
           ],
-          "commandToExecute": "sudo sh install.sh"
+          "tags": {
+            "displayName": "config-app"
+          },
+          "properties": {
+            "publisher": "Microsoft.Azure.Extensions",
+            "type": "CustomScript",
+            "typeHandlerVersion": "2.0",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+              "fileUris": [
+                "[variables('scriptUri')]"
+              ],
+              "commandToExecute": "sudo sh install.sh"
+            }
+          }
         }
-      }
+      ]
     }
   ]
 }

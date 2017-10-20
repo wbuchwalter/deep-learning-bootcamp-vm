@@ -40,7 +40,7 @@
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnet1Ref": "[concat(variables('vnetID'),'/subnets/',variables('subnet1Name'))]",
     "apiVersion": "2015-06-15",
-    "customData": "curl -L -sf https://raw.githubusercontent.com/wbuchwalter/deep-learning-bootcamp-vm/master/install.sh | sudo sh"
+    "scriptUri": "https://raw.githubusercontent.com/wbuchwalter/deep-learning-bootcamp-vm/master/install.sh"
   },
   "resources": [
     {
@@ -132,8 +132,7 @@
         "osProfile": {
           "computerName": "[variables('vmName')]",
           "adminUsername": "[parameters('adminUsername')]",
-          "adminPassword": "[parameters('adminPassword')]",
-          "customData": "[base64(variables('customData'))]"
+          "adminPassword": "[parameters('adminPassword')]"
         },
         "storageProfile": {
           "imageReference": {
@@ -158,6 +157,30 @@
             "enabled": true,
             "storageUri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')), variables('apiVersion')).primaryEndpoints.blob)]"
           }
+        }
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "extensions",
+      "name": "config-app",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+      ],
+      "tags": {
+        "displayName": "config-app"
+      },
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "[variables('scriptUri')]"
+          ],
+          "commandToExecute": "sudo sh install.sh"
         }
       }
     }

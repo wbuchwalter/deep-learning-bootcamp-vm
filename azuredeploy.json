@@ -26,7 +26,7 @@
     "imagePublisher": "microsoft-ads",
     "imageSku": "linuxdsvmubuntu",
     "imageOffer": "linux-data-science-vm-ubuntu",
-    "vmSize": "Stamdard_NC6",
+    "vmSize": "Standard_NC6",
     "nicName": "networkInterface1",
     "vmName": "vm1",
     "virtualNetworkName": "virtualNetwork1",
